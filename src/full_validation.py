@@ -21,6 +21,9 @@ from scipy.optimize import least_squares
 
 from invert_K import R_burkert, invert_K_from_R, fit_lorentzian, lorentzian
 
+# np.trapz was removed in NumPy 2.0 (renamed np.trapezoid)
+_trapz = np.trapezoid if hasattr(np, "trapezoid") else np.trapz
+
 G = 4.3009e-6  # kpc (km/s)^2 / Msun
 
 KAPPA_DEFAULT = 10 ** -6.5
@@ -34,7 +37,7 @@ def v2_burkert(r_kpc, rho0B, r0):
     for i, yy in enumerate(y):
         ss = s * yy
         integ = ss ** 2 / ((1 + ss) * (1 + ss ** 2))
-        out[i] = np.trapz(integ, ss)
+        out[i] = _trapz(integ, ss)
     M = 4 * np.pi * rho0B * r0 ** 3 * out
     return G * M / np.maximum(r_kpc, 1e-9)
 
@@ -74,7 +77,7 @@ def fit_burkert(r, v, e, vgas, vdisk, vbul):
 def process_one(name, data_dir, kappa, rho_target):
     d = load_rotmod(os.path.join(data_dir, f"{name}_rotmod.dat"))
     if len(d) < 5:
-        return None
+        return {"name": name, "ok": False, "error": "too few data points"}
     r, v, e = d[:, 0], d[:, 1], d[:, 2]
     vgas, vdisk, vbul = d[:, 3], d[:, 4], d[:, 5]
     try:
