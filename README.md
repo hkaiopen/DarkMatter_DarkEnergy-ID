@@ -4,13 +4,21 @@ Inverting a universal virtual–real coupling $K(r)$ from SPARC galaxy rotation 
 
 ## Result
 
-Across 8 SPARC galaxies ($V_{\max}=48$–$216$ km/s), the inverted coupling is universal:
+Across 126 of 175 SPARC galaxies, the inverted coupling is universal:
 
 $$K(r) = -\frac{K_0}{1+(r/r_c)^2}$$
 
-- $K_0 = 208 \pm 14\ \mathrm{kpc^{-2}}$ (6.6% scatter)
-- $r_c = 0.144 \pm 0.006\ \mathrm{kpc}$ (4.2% scatter)
-- Lorentzian fit $R^2 > 0.94$ for every galaxy
+- $K_0 = 204 \pm 31\ \mathrm{kpc^{-2}}$ (15.3% scatter)
+- $r_c = 0.145 \pm 0.012\ \mathrm{kpc}$ (8.4% scatter)
+- Lorentzian fit $R^2 > 0.91$ for every successful galaxy
+
+The core size $r_c$ matches the 8-galaxy pilot value (0.144 kpc) exactly —
+universality confirmed at 16× the sample size.
+
+New: $K_0$ and $r_c$ are anti-correlated (Pearson $r=-0.66$). The integrated
+proxy $K_0 r_c^2$ (13.8% scatter) is more universal than $K_0$ alone,
+suggesting a conserved vortex charge: cores vary from "peaked-narrow"
+to "broad-shallow" at fixed total charge.
 
 Interpretation: each dark matter halo is anchored by a virtual vortex — $r_c$ is the
 virtual healing length, $K_0$ the topological charge. Dark matter (localized vortices)
@@ -44,6 +52,7 @@ python src/full_validation.py --data data --out results
 - `src/full_validation.py` — full-sample universality stress test
 - `data/` — SPARC `*_rotmod.dat` (175 galaxies)
 - `figs/` — result figures
+- `results/` — full-sample output (`k_results.json`, `K_universality_full.png`)
 
 ## Data
 
@@ -51,4 +60,4 @@ SPARC: Lelli, McGaugh & Schombert 2016, AJ 152, 157. Data via Zenodo 16284118.
 
 ## License
 
-MIT
+CC BY-NC-SA 4.0
